@@ -59,37 +59,90 @@
 					<!-- end slider -->
  			  </section>
 
+<?php
+
+   // We'll only show these sections if WooCommerce is ative
+        if( class_exists( 'WooCommerce' ) ): 
+
+?>
 		      <section class="popular-products">
+             <?php
+                     // Getting data from Customizer to display the Popular Products section
+                    $popular_limit    = get_theme_mod( 'set_popular_max_num', 4 );
+                    $popular_col    = get_theme_mod( 'set_popular_max_col', 4 );
+                    $arrivals_limit   = get_theme_mod( 'set_new_arrivals_max_num', 4 );
+                    $arrivals_col   = get_theme_mod( 'set_new_arrivals_max_col', 4 );
+             ?>
                 <div class="container">
- 			  		<h2 class="text-primary"> Popular Products</h2>
- 			  		   <?php echo do_shortcode( '[products limit="4" columns="4" orderby="popularity" ]' ); ?>
+ 			  		<h2 class="text-primary"> <?php echo esc_html( get_theme_mod( 'set_popular_title', __( 'Popular products', 'cherki-dev' ) ) ); ?> </h2>
+ 			  		   <?php echo do_shortcode( '[products limit=" ' .$popular_limit. ' " columns=" ' . $popular_col . ' " orderby="popularity" ]' ); ?>
  			  	</div>
 		      </section>
 
 		      <section class="new-arrivals">
                  <div class="container">
- 			  		<h2 class="text-primary">New Arivals </h2>
- 			  		   <?php echo do_shortcode( '[products limit="4" columns="4" orderby="date" ]' ); ?>
+ 			  		<h2 class="text-primary"> <?php echo esc_html( get_theme_mod( 'set_new_arrivals_title', __( 'New Arrivals', 'cherki-dev' ) ) ); ?> </h2>
+ 			  		   <?php echo do_shortcode( '[products limit=" ' .$arrivals_limit. ' " columns=" ' .$arrivals_col. ' " orderby="date" ]' ); ?>
  			  	</div>
 		     </section>
 
-		      <section class="deal-of-the-week">
-                 <div class="container"><div class="row">
- 			  		   <h2 class="text-success"> Deal of the Week </h2>
- 			  		   <?php echo do_shortcode( '[product_categories number="0" parent="0"]' ); ?>
- 			  		</div>
- 			  	</div>
-		      </section>
+           <!-- start section deal of the week -->
+             <?php get_template_part( 'includes/section', 'dealofweek' ); ?>
+          <!-- <?php //echo do_shortcode( '[product_categories number="0" parent="0"]' ); ?> -->
+          <!-- end section deal of the week -->
 
-		      <section class="lab-blog">
-		      	<div class="container">
- 			  		<div class="row">
- 			  		   <!-- start posts loop -->
-                          <?php get_template_part( 'includes/section', 'postscontent' ); ?>
- 			  		   	<!-- end posts loop -->
- 			  		</div>
- 			  	</div>
-		      </section>
+
+<?php endif; ?>
+		      
+      <section class="lab-blog">
+          <div class="container">
+            <div class="section-title">
+              <h2><?php echo esc_html( get_theme_mod( 'set_blog_title', __( 'News From Our Blog', 'cherki-dev' ) ) ); ?></h2>
+            </div>            
+            <div class="row">
+              <?php 
+
+              $args = array(
+                'post_type'       => 'post',
+                'posts_per_page'    => 2,
+                'ignore_sticky_posts' => true,
+              );
+
+              $blog_posts = new WP_Query( $args );
+
+                // If there are any posts
+                if( $blog_posts->have_posts() ):
+
+                  // Load posts loop
+                  while( $blog_posts->have_posts() ): $blog_posts->the_post();
+                    ?>
+                      <article class="col-12 col-md-6">
+                        <a href="<?php the_permalink(); ?>">
+                          <?php 
+                            if( has_post_thumbnail() ):
+                              the_post_thumbnail( 'cherki_image_blog', array( 'class' => 'img-fluid' ) );
+                            endif;
+                          ?>
+                        </a>
+                        <h3>
+                          <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                        </h3>
+                        <span class="pub-date">
+                          <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_date() ); ?></a>
+                        </span>
+                        <div class="excerpt"><?php the_excerpt(); ?></div>
+                      </article>
+                    <?php
+                  endwhile;
+                  wp_reset_postdata();
+                else:
+              ?>
+                <p><?php esc_html_e( 'Nothing to display.', 'cherki-dev' ); ?></p>
+              <?php endif; ?>
+            </div>
+          </div>
+        </section>
+
  		</main>
  	</div>
  	<!-- end Content -->

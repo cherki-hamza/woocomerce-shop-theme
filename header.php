@@ -1,3 +1,15 @@
+<?php
+/**
+ * The header for our theme
+ *
+ * This is the template that displays all of the <head> section
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package cherki dev shop
+ */
+?>
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -43,20 +55,20 @@
 
                          <?php if(class_exists('WooCommerce')): ?>
 
-	 				 	<div class="acount col-12">
+	 				 	<div class="account col-12">
 
 	 				 		<div class="navbar-expand">
 	 				 			<ul class="navbar-nav float-left">
 	 				 				<?php if(is_user_logged_in()): ?>
 		 				 				<li>
-		 				 					<a href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>" class="nav-link">My Account</a>
+		 				 					<a href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>" class="nav-link"><?php __('My Account' , 'cherki-dev') ?></a>
 		 				 				</li>
 		 				 				<li>
-		 				 					<a href="<?php echo esc_url(wp_logout_url(get_permalink(get_option('woocommerce_myaccount_page_id')))); ?>" class="nav-link">Logout</a>
+		 				 					<a href="<?php echo esc_url(wp_logout_url(get_permalink(get_option('woocommerce_myaccount_page_id')))); ?>" class="nav-link"><?php __('Logout' , 'cherki-de') ?></a>
 		 				 				</li>
 	 				 				<?php else: ?>
                                          <li>
-		 				 					<a href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>" class="nav-link">Register</a>
+		 				 					<a href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>" class="nav-link"><?php __('Register' , 'cherki-dev') ?></a>
 		 				 				</li>
 	 				 			   <?php endif; ?>
 	 				 			</ul>

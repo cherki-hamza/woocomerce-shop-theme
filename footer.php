@@ -1,10 +1,51 @@
+<?php
+/**
+ * The template for displaying the footer
+ *
+ * Contains the closing of the #page div and all content after.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package cherki dev shop
+ */
+
+?>
+
+
 <!-- start footer -->
   <div class="container">
     <footer class="footer">
 
        <section class="footer-widgets">
-	         <div class="container">
-	         	<div class="row">Footer Widgets</div>
+	         <div class="container-fluid">
+	         	<div class="row">
+
+                   <!-- start footer widget -->
+         		    <div class="col-md-4">
+         		    	<?php if(is_active_sidebar( 'cherki-dev-footer1-sidebare-1' )): ?>
+		         			 
+		         			  	  <?php  dynamic_sidebar( 'cherki-dev-footer1-sidebare-1' ); ?>
+		         			  
+         		       <?php endif  ?>
+         		    </div>
+
+         		    <div class="col-md-4">
+         		    	<?php if(is_active_sidebar( 'cherki-dev-footer2-sidebare-2' )): ?>
+		         			
+	                         <?php  dynamic_sidebar( 'cherki-dev-footer2-sidebare-2' ); ?>
+	                         
+         		     <?php endif  ?>
+         		    </div>
+
+         		    <div class="col-md-4">
+         		    	<?php if(is_active_sidebar( 'cherki-dev-footer3-sidebare-3' )): ?>
+		         			
+	                         <?php  dynamic_sidebar( 'cherki-dev-footer3-sidebare-3' ); ?>
+	                       
+         		        <?php endif  ?>
+         		    </div>
+	         		    <!-- end footer widget -->
+	         	    
 	         </div>
         </section>
 
@@ -19,7 +60,7 @@
 							<?php 
 								wp_nav_menu( 
 									array(
-										'theme_location' 	=> 'footer_menu'
+										'theme_location' 	=> __('footer_menu' , 'cherki-dev')
 									) 
 								); 
 							?>							

@@ -46,6 +46,9 @@ function close_wraper_div_container(){
             echo '</div>';
         }
 
+        // add short excerpt description for product
+        add_action('woocommerce_after_shop_loop_item_title' , 'the_excerpt' , 1);  
+
 }
 
 
@@ -66,6 +69,8 @@ add_action('woocommerce_before_main_content' , 'close_col8_tag' , 4);
 function close_col8_tag(){
     echo '</div>';
 }
+
+
   
 /*  
 // add filters hook to remove title
@@ -76,8 +81,7 @@ function remove_shop_page_tiitle($value){
 }
 */
 
-// add short excerpt description for product
-add_action('woocommerce_after_shop_loop_item_title' , 'the_excerpt' , 1);  
+
 
 }
 add_action('wp' , 'wc_rewrite');

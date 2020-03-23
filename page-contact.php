@@ -1,3 +1,13 @@
+<?php
+/**
+ * The template for displaying page contact me
+ *
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package cherki dev shop
+ */
+?>
 <?php get_header(); ?>
 
  	<!-- start Content -->

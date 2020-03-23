@@ -36,10 +36,27 @@ function cherki_styles_scripts(){
     wp_enqueue_script('fontawesom-script', get_template_directory_uri().'/assets/js/all.js', array('jquery'), '1.0', true);
     wp_enqueue_script('main-script', get_template_directory_uri().'/assets/js/main.js', array('jquery'), '1.0', true);
 
+     
+    // particle js  is_404()
+    //wp_enqueue_script('particle-script', get_template_directory_uri().'/assets/js/particle.js', array(), true);
+    //wp_enqueue_script('particle-script', get_template_directory_uri().'/assets/js/particle.min.js', array(), true);
+    
+      //wp_enqueue_script('particle' , 'http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js' );
+      //wp_enqueue_script('flexslider-main-script' , '');
+
+     
+
+    // particle css
+    //if( is_404() ){
+      //  wp_enqueue_style( 'particle-style', get_template_directory_uri().'/assets/css/particle.css', array(), '1.0' , 'all' );
+    //}
+
+
+
     // flex slider js script
     wp_enqueue_script('flexslider-jquery-script', get_template_directory_uri().'/assets/flexslider/jquery.flexslider.js', array('jquery'), '', true);
      wp_enqueue_script('flexslider-main-script', get_template_directory_uri().'/assets/flexslider/flexslider.js', array('jquery'), '', true);
-
+    
 	
 }
 add_action( 'wp_enqueue_scripts', 'cherki_styles_scripts');
@@ -59,7 +76,7 @@ add_action('wp_head', 'load_favicon');
 function the_sidbar(){
 
     register_sidebar(array(
-       'name' => 'Main Sidebar',
+       'name' => __('Main Sidebar' , 'cherki-dev'),
         'id'  => 'main_sidebar',
         'class'         => 'okocha',
         'before_widget' => '<div class="card">',
@@ -79,8 +96,8 @@ function cherki_theme_supports(){
    // register menu
         register_nav_menus(
                 array(
-                   'main_menu'   => 'Main Menu',
-                   'footer_menu' => 'Footer Menu'
+                   'main_menu'   => __('Main Menu' , 'cherki-dev'),
+                   'footer_menu' => __('Footer Menu' , 'cherki-dev')
                 )
         );
 
@@ -94,7 +111,7 @@ function cherki_theme_supports(){
 	            'max_rows'        => 10,
 	            'default_columns' => 3,
 	            'min_columns'     => 1,
-	            'max_columns'     => 5,	 
+	            'max_columns'     => 6,	 
          ) 
        )
     );
@@ -104,6 +121,10 @@ function cherki_theme_supports(){
         add_theme_support( 'wc-product-gallery-zoom' );
 		add_theme_support( 'wc-product-gallery-lightbox' );
 		add_theme_support( 'wc-product-gallery-slider' );
+
+        // support thumbnail
+        add_theme_support('post-thumbnails');
+
         // support widget
         add_theme_support('widgets');
         // support for custom log
@@ -117,15 +138,91 @@ function cherki_theme_supports(){
         // support for slider image size
         add_image_size( 'cherki_image_slider' , 1920 , 800, array('center' , 'center') );
 
+        // support for blog image size
+        add_image_size( 'cherki_image_blog' , 960 , 640, array('center' , 'center') );
+
 
         // content width
 		if ( ! isset( $content_width ) ) {
 			$content_width = 600;
 		}	
 
+        // support for title tag
+        add_theme_support('title-tag');
+
+        // add translaion for theme
+        $textdomain = 'cherki-dev';
+        load_theme_textdomain( $textdomain, get_template_directory() . '/languages/' );
+        load_theme_textdomain( $textdomain, get_stylesheet_directory() . '/languages/' );
+
 
 }
 add_action( 'after_setup_theme', 'cherki_theme_supports' , 0);
+
+/*-----------------------------------------------------------------------------------------------------------------------*/
+
+add_action('widgets_init' , 'cherki_setup_widgets');
+function cherki_setup_widgets(){
+   
+     register_sidebar(array(
+         'name'          =>  __('Cherki Dev Sidebars' , 'cherki-dev'),
+         'id'            =>  'cherki-dev-sidebare-1',
+         'description'   =>  __('Drag and drop your widgets here' , 'cherki-dev'),
+         'before_widget' =>  '<div id="%1$s" class="widget %2$s widget-wrapper">', 
+         'after_widget'  =>  '</div>',
+         'before_title'  =>  '<h4 class="widget-title">',
+         'after_title'   =>  '</h4>',
+       ) 
+    );
+
+     register_sidebar(array(
+         'name'          =>  __('Cherki Shop Sidebars' , 'cherki-dev'),
+         'id'            =>    'cherki-dev-shop-sidebare-2',
+         'description'   =>  __('Drag and drop your widgets here' , 'cherki-dev'),
+         'before_widget' =>  '<div id="%1$s" class="widget %2$s widget-wrapper">', 
+         'after_widget'  =>  '</div>',
+         'before_title'  =>  '<h4 class="widget-title">',
+         'after_title'   =>  '</h4>',
+       ) 
+    );
+
+
+     register_sidebar(array(
+         'name'          =>   __('Cherki Footer 1 Sidebars' , 'cherki-dev'),
+         'id'            =>  'cherki-dev-footer1-sidebare-1',
+         'description'   =>   __('Drag and drop your widgets here' , 'cherki-dev'),
+         'before_widget' =>  '<div id="%1$s" class="widget %2$s widget-wrapper">', 
+         'after_widget'  =>  '</div>',
+         'before_title'  =>  '<h4 class="widget-title">',
+         'after_title'   =>  '</h4>',
+       ) 
+    );
+
+
+     register_sidebar(array(
+         'name'          =>   __('Cherki Footer 2 Sidebars' , 'cherki-dev'),
+         'id'            =>  'cherki-dev-footer2-sidebare-2',
+         'description'   =>   __('Drag and drop your widgets here' , 'cherki-dev'),
+         'before_widget' =>  '<div id="%1$s" class="widget %2$s widget-wrapper">', 
+         'after_widget'  =>  '</div>',
+         'before_title'  =>  '<h4 class="widget-title">',
+         'after_title'   =>  '</h4>',
+       ) 
+    );
+
+     register_sidebar(array(
+         'name'          =>   __('Cherki Footer 3 Sidebars' , 'cherki-dev'),
+         'id'            =>  'cherki-dev-footer3-sidebare-3',
+         'description'   =>   __('Drag and drop your widgets here' , 'cherki-dev'),
+         'before_widget' =>  '<div id="%1$s" class="widget %2$s widget-wrapper">', 
+         'after_widget'  =>  '</div>',
+         'before_title'  =>  '<h4 class="widget-title">',
+         'after_title'   =>  '</h4>',
+       ) 
+    );
+
+}
+
 
 
 /*-----------------------------------------------------------------------------------------------------------------------*/

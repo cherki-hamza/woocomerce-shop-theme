@@ -1,13 +1,7 @@
-<?php
-/**
- * Template part for displaying posts content
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package cherki dev shop
- */
+<?php get_header(); ?>
 
-?>
+<div class="container">
+
 <article <?php post_class(); ?>>
   <h2>
     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -32,11 +26,23 @@
     <?php endif; ?>
     </p>
   </div>
-  <?php if( has_excerpt() ): ?>
-        <div class="content"><?php the_excerpt(); ?></div>
-    <?php elseif( strpos( $post->post_content, '<!--more-->' ) ): ?>
-     <div class="content"><?php the_content( 'More' ); ?></div>
-    <?php else: ?>
-         <div class="content"><?php the_excerpt(); ?></div>
-    <?php endif; ?>
-</article>
+
+     <div class="content"><?php the_excerpt(); ?></div>
+
+      
+      <?php if(comments_open() || get_comments_number() ): ?>
+     <!-- start comments -->
+     <div class="container card">
+     	   <div class="comments">
+     	   	  <?php comments_template(); ?>
+     	   </div>
+     </div>
+     <!-- end comments -->
+     <?php endif; ?>
+   
+</article>	
+
+</div>
+
+
+<?php get_footer(); ?>
